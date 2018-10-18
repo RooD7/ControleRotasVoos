@@ -1,33 +1,38 @@
 import Cli
-import Grafo
+import AppGrafos
 
-class Cli(object):
+class controlCli(object):
 	""" controle interface """
 	def __init__(self):
-		pass
+		self.cli = Cli.Cli()
+		self.grafos = AppGrafos.AppGrafos()
 
-	def ctrlMenu(self):
+	def menu(self):
 		while True:
-			if(op == 1):
-				Grafo.loadGrafo()
-			elif(op == 2):
-				Grafo.caminho()
-			elif(op == 3):
-				Grafo.vooDireto()
-			elif(op == 4):
-				Grafo.menorCusto()
-			elif(op == 5):
-				Grafo.caminho()
-			elif(op == 6):
-				Grafo.caminhoMinimo()
-			elif(op == 7):
-				Grafo.desenharGrafo()
-			elif(op == 0):
+			op = self.cli.menu()
+			if(op == '1'):
+				self.grafos.loadGrafo()
+			elif(op == '2'):
+				self.grafos.caminho()
+			elif(op == '3'):
+				self.grafos.vooDireto()
+			elif(op == '4'):
+				self.grafos.menorCusto()
+			elif(op == '5'):
+				self.grafos.caminho()
+			elif(op == '6'):
+				self.grafos.caminhoMinimo()
+			elif(op == '7'):
+				self.grafos.desenharGrafo()
+			elif(op == '0'):
 				while(True):
-					op = Cli.sair()
+					op = self.cli.sair()
 					if op.lower() == 'y':
 						exit()
 					elif op.lower() == 'n':
 						break
+					else:
+						self.cli.opInvalida()
+						
 			else:
-				pass
+				self.cli.opInvalida()

@@ -4,7 +4,7 @@ class Cli(object):
 		pass
 
 	def menu(self):
-		print('\t---\t--- Menu ---\t---\t')
+		print('\n\t---\t--- Menu ---\t---\t')
 		print('1. Carregar grafo.')
 		print('2. Caminho entre 2 aeroportos.')
 		print('3. Voos diretos a partir de um aeroporto.')
@@ -14,10 +14,10 @@ class Cli(object):
 		print('7. Desenhar grafos.')
 		print('0. Sair\n')
 
-		op = input('Selecione a opção: ')
+		return input('Selecione a opção: ')
 
-		return op
-
-	def sair():
-		return input("Deseja realmente sair? (y/n)")
-		
+	def sair(self):
+		return input("Deseja realmente sair? (y/n): ")
+	
+	def opInvalida(self):
+		print("Opção inválida!\n")
