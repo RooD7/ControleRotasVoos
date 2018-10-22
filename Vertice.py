@@ -1,12 +1,12 @@
 class Vertice(object):
-	def __init__(self,id):
-		self.id = id
+	def __init__(self,ide):
+		self.id = ide
 		self.estimativa = 99999999
 		self.visitado = False
 		self.predecessor = []
 
-	def setId(self, id):
-		self.id = id
+	def setId(self, ide):
+		self.id = ide
 
 	def getId(self):
 		return self.id
@@ -23,6 +23,9 @@ class Vertice(object):
 	def getEstimativa(self):
 		return self.estimativa
 
+	def getPredecessor(self):
+		return self.predecessor
+		
 	# string
 	def __str__(self):
 		return (" Vertice  : %s \n Estimativa: %i \n" % 
@@ -32,8 +35,8 @@ class Vertice(object):
 	def __eq__(self, v):
 		return self.id == v.id
 
-	def __eq__(self, v):
-		return self.estimativa == v.estimativa
+	# def __eq__(self, v):
+	# 	return self.estimativa == v.estimativa
 
 	# menor
 	def __lt__(self, v):

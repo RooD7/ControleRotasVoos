@@ -21,3 +21,6 @@ class Cli(object):
 	
 	def opInvalida(self):
 		print("Opção inválida!\n")
+
+	def nomeArquivo(self):
+		return input("Digite o nome do arquivo: ")
