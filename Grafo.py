@@ -6,6 +6,7 @@ class Grafo(object):
 		self.vertices = []
 		self.arestas = []
 		self.direcionado = direcionado
+		self. caminho = []
 
 	def novoVertice(self, ide):
 		self.vertices.append(Vertice.Vertice(ide))
@@ -49,8 +50,7 @@ class Grafo(object):
 				# Para nao retornar o mesmo vertice
 				a.getDestino().setVisitado(True)
 				return a.getDestino()
-			else:
-				return None
+		return None
 		
 	def vazio(self):
 		if len(self.vertices) == 0:
@@ -58,18 +58,54 @@ class Grafo(object):
 		else:
 			return False
 
-	def visita(self, v1, v2):
-		print('Partindo do vertice '+str(v1.getId())+', visitamos o vertice '+str(v2.getId())+'.')
-		v1.setVisitado(True)
+	def buscaLargura(self, v1, v2):
+		self.visitarVertice(v1)
 		adj = self.verticeAdjacente(v1)  # retorna apenas não visitado ou nulo
 		while adj is not None:
 			adj.getPredecessor().append(v1.getId())
-			self.visita(adj)
-			adj = self.verticeAdjacente(v1)
-		print("Voltando para: ", v1.getPredecessor())
+			self.caminho.append(v1.getId())
+			if adj.__eq__(v2):
+				self.caminho.append(v2.getId())
+				self.caminho.append('FIM')
+				return None
+			else:
+				self.buscaLargura(adj,v2)
+				adj = self.verticeAdjacente(v1)
+		if len(self.caminho) != 0 and self.caminho[len(self.caminho)-1] != 'FIM':
+			self.caminho.pop()
+
+	def visitarVertice(self, vert):
+		for v in self.vertices:
+			if (v.getId() == vert.getId()):
+				v.setVisitado(True)
+				break
+
+	def getVertice(self, vert):
+		for v in self.vertices:
+			if v.getId() == vert:
+				return v
+		return None
 
 	def getVertices(self):
 		return self.vertices
 
 	def getArestas(self):
 		return self.arestas
+
+	def getCaminho(self):
+		if len(self.caminho) != 0 and self.caminho[len(self.caminho)-1] == 'FIM':
+			self.caminho.pop()
+		return self.caminho
+
+	def clearCaminho(self):
+		self.caminho = []
+
+	def printCaminho(self):
+		if len(self.caminho) == 0:
+			print('Não existe caminho possível!')
+		else:
+			strg = ''
+			for i in range(len(self.caminho)-1):
+				strg += '%s -> '%self.caminho[i]
+			strg += '%s.'%self.caminho[len(self.caminho)-1]
+			print(strg)

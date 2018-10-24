@@ -7,15 +7,24 @@ from graphviz import Digraph
 
 class GrafoViz(object):
 	""" Visualizacao Grafica de um Grafo """
-	def __init__(self, fileName = 'grafo.gv'):
+	def __init__(self, fileName = 'grafo.gv', direcionado=True):
 		self.fileName = fileName
-		self.g = Digraph('G', filename= fileName)
+		self.direcionado = direcionado
+		if self.direcionado:
+			self.g = Digraph('G', filename= fileName)
+		else:
+			self.g = Digraph('G', filename= fileName)
+			
 
 	def novoVertice(self,vertice):
 		self.g.node(vertice)
 
 	def novaAresta(self,v1, v2, lab= '/**/', cor = 'black'):
-		self.g.edge(v1, v2, label= lab, color= cor)
+		if self.direcionado:
+			self.g.edge(v1, v2, label= lab, color= cor)
+		else:
+			self.g.edge(v1, v2, label= lab, color= cor, dir= 'none')
+
 
 	def view(self):
 		self.g.view()

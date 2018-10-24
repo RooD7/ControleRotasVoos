@@ -28,7 +28,7 @@ class Vertice(object):
 		
 	# string
 	def __str__(self):
-		return (" Vertice  : %s \n Estimativa: %i \n" % 
+		return (" Vertice  : %s \t Estimativa: %i \n" % 
 			(self.id, self.estimativa))
 
 	# equals

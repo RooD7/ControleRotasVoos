@@ -14,15 +14,17 @@ class ControlCli(object):
 				# fileName = self.cli.nomeArquivo()
 				self.grafos.loadGrafo()
 			elif(op == '2'):
-				v1 = input('vertice 1: ')
-				v2 = input('vertice 2: ')
+				v1 = input('Aeroporto 1: ')
+				v2 = input('Aeroporto 2: ')
 				self.grafos.caminho(v1, v2)
 			elif(op == '3'):
-				self.grafos.vooDireto()
+				v = input('Aeroporto: ')
+				self.grafos.vooDireto(v)
 			elif(op == '4'):
 				self.grafos.menorCusto()
 			elif(op == '5'):
-				self.grafos.caminho()
+				pass
+				# self.grafos.caminho()
 			elif(op == '6'):
 				self.grafos.caminhoMinimo()
 			elif(op == '7'):
