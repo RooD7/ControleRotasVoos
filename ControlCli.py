@@ -21,7 +21,9 @@ class ControlCli(object):
 				v = input('Aeroporto: ')
 				self.grafos.vooDireto(v)
 			elif(op == '4'):
-				self.grafos.menorCusto()
+				v1 = input('Aeroporto 1: ')
+				v2 = input('Aeroporto 2: ')
+				self.grafos.menorCusto(v1, v2)
 			elif(op == '5'):
 				pass
 				# self.grafos.caminho()

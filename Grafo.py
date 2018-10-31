@@ -38,8 +38,8 @@ class Grafo(object):
 	def buscaAresta(self, origem, destino):
 		# origem e destino sao strings
 		for a in self.arestas:
-			if ((a.getOrigem().__eq__(Vertice.Vertice(origem))) and 
-				(a.getDestino().__eq__(Vertice.Vertice(destino)))):
+			if ((a.getOrigem().getId() == origem) and 
+				(a.getDestino().getId() == destino)):
 				return a
 		return None
 

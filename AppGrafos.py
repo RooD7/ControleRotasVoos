@@ -71,9 +71,47 @@ class AppGrafos(object):
 		strg += '%s.'%caminho[len(caminho)-1]
 		print(strg)
 
-
-	def menorCusto(self):
+	def relaxamento(self, u, v, w):
+		if v.getEstimativa() > (u.getEstimativa() + w.getPeso()):
+			v.setEstimativa(u.getEstimativa() + w.getPeso())
+			v.predecessor.append(u.getId()) # guarda apenas o id
+	# Dijkstra
+	def menorCusto(self, v1, v2):
 		pass
+		# voos = deepcopy(self.grafoVoos)
+		# origem = voos.buscaVertice(v1)
+		# destino = voos.buscaVertice(v2)
+		# if origem is not None and destino is not None:
+		# 	origem.setVisitado(True)
+		# 	origem.setEstimativa(0)
+
+		# 	resposta = []  # conjunto resposta
+		# 	lista = deepcopy(voos.getVertices())
+		# 	# for i in voos.getVertices():
+		# 	# 	lista.append(i)
+		# 	while len(lista) != 0:
+		# 		lista.sort()  # ordeno a lista baseado na estimativa
+		# 		u = lista[0]
+		# 		v = voos.verticeAdjacente(u)
+		# 		if v is None:
+		# 			for i in voos.getVertices():  # como o vetice u marcou seus adj como visitado nenhum outro vértice visitara
+		# 				i.setVisitado(
+		# 					False)  # esse vertice então preciso marcar como não visitado pra bucar os adj de outro vertice
+		# 			# self.tempo += 1
+		# 			# u.setImput(self.tempo)  # apenas mostra a ordem de visitação do grafo
+		# 			resposta.append(lista[0])
+		# 			lista.pop(0)  # retiro vertice sem adjacente da lista
+
+		# 		else:
+		# 			w = voos.buscaAresta(u, v)
+		# 			if w is not None:
+		# 				self.relaxamento(u, v, w)
+
+		# 	print("Estimativas: ")
+		# 	for i in resposta:
+		# 		print(i) # imprimo as respostas
+		# else:
+		# 	print('Aeroporto informado desconhecido!')
 
 	def caminho2(self):
 		pass
