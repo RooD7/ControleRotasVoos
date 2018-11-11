@@ -1,5 +1,6 @@
 import ControlCli
 
+
 class Main(object):
-	cl = ControlCli.ControlCli()
-	cl.menu()
+    cl = ControlCli.ControlCli()
+    cl.menu()
