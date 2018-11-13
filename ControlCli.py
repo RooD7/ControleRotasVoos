@@ -25,10 +25,13 @@ class ControlCli(object):
 				v2 = input('Aeroporto 2: ')
 				self.grafos.menorCusto(v1, v2)
 			elif(op == '5'):
-				pass
+				v = int(input('Aeroporto de partida: '))
+				self.grafos.montar_grafo()
+				self.grafos.prim(v)
 				# self.grafos.caminho()
 			elif(op == '6'):
-				self.grafos.caminhoMinimo()
+				v1 = input('Aeroporto 1: ')
+				self.grafos.caminho2(v1)
 			elif(op == '7'):
 				self.grafos.desenharGrafo()
 			elif(op == '0'):

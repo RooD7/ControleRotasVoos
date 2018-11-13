@@ -52,17 +52,16 @@ class Grafo(object):
 				return a.getDestino()
 		return None
 
-	def menorVerticeAdjacente(self, v):
+	def menorArestaAdjacente(self, v):
 		menorDist = 999999
 		menor = None
 		for a in self.arestas:
 			if ((a.getOrigem().getId() == v.getId()) and
 					(not a.getDestino().getVisitado())):
-				# Para nao retornar o mesmo vertice
-				a.getDestino().setVisitado(True)
-				if menorDist > int(v.getEstimativa()) + int(a.getDist()):
-					menorDist = int(v.getEstimativa()) + int(a.getDist())
-					menor = a.getDestino()
+				if menorDist > int(a.getDist()):
+					menorDist = int(a.getDist())
+					menor = a
+		menor.getOrigem().setVisitado(True)
 		return menor
 
 	def vazio(self):

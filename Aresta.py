@@ -36,8 +36,13 @@ class Aresta(object):
 	def setTempo(self, tempo):
 		self.tempo = tempo
 
+	def __eq__(self,a):
+		if self.origem == a.origem and self.destino == a.destino and self.dist == a.dist:
+			return True
+
+
 	# string
 	def __str__(self):
-		return ("A(%s --- Dist: %i - numP: %i - tempo: %i ---> %s)" % (self.origem.getId(),
+		return ("A(%s --- Dist: %s - numP: %s - tempo: %s ---> %s)" % (self.origem.getId(),
 																	   self.dist, self.numP, self.tempo,
 																	   self.destino.getId()))

@@ -9,9 +9,9 @@ class Cli(object):
 		print('1. Carregar grafo.')
 		print('2. Caminho entre 2 aeroportos.')
 		print('3. Voos diretos a partir de um aeroporto.')
-		print('4. Viagem de menor custo.')
-		print('5. Acessar aeroporto.')
-		print('6. Caminho minimo entre os aeroportos.')
+		print('4. Viagem de menor custo (caminho minimo - Dijkstra).')
+		print('5. Acessar aeroporto (Prim).')
+		print('6. Rota minima (Dijkstra modificado).')
 		print('7. Desenhar grafos.')
 		print('0. Sair\n')
 
