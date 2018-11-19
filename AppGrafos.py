@@ -18,7 +18,7 @@ class AppGrafos(object):
 	def __init__(self):
 		self.grafoVoos = Grafo.Grafo() 
 		self.grafoRotas = Grafo.Grafo(False)
-		self.graph = []
+		self.prim = []
 
 	# Opcao 1
 	def loadGrafo(self, fileName='mapaGrafo.txt'):
@@ -79,9 +79,6 @@ class AppGrafos(object):
 		print(strg)
 
 	def relaxamento(self, u, v, w):
-		print('v.estimativa: '+str(v.getEstimativa()))
-		print('u.estimativa: '+str(u.getEstimativa()))
-		print('w.distancia : '+str(w.getDist()))
 		if v.getEstimativa() > (u.getEstimativa() + int(w.getDist())):
 			return u.getEstimativa() + int(w.getDist())
 			# v.predecessor.append(u.getId())  # guarda apenas o id
@@ -112,17 +109,9 @@ class AppGrafos(object):
 				
 				u = listaVert[0]
 				v = voos.verticeAdjacente(u)
-				print('u: '+str(u.getId()))
-				if v is not None:
-					print('v: '+str(v.getId()))
-				else:
-					print('v: None')
 
-				for i in listaVert:
-					if i.getEstimativa() != 999999:
-						print('ID: '+str(i.getId())+'\tEST: '+str(i.getEstimativa()))
 				if v is None:
-					print('Não encontrou mais...')
+					# print('Não encontrou mais...')
 					# self.tempo += 1
 					resposta.append(listaVert.pop(0))
 					# listaVert.pop(0)  # retiro vertice sem adjacente da lista
@@ -141,14 +130,7 @@ class AppGrafos(object):
 						break
 
 			if encontrou:
-				print("Camminho mínimo: ")
-				# for i in resposta:
-				# 	print(i) # imprimo as respostas
-				# for i in listaVert:
-				# 	if i.getPredecessor() != []:
-				# 		for j in i.getPredecessor():
-				# 			print('VT: '+str(i.getId())+'\tPDT: '+str(j.getId()))
-
+				print("\nCaminho mínimo: ")
 				# extrai os predecessor do vetor resposta
 				r = []
 				r.insert(0, destino.getId())
@@ -266,20 +248,24 @@ class AppGrafos(object):
 			print('Aeroporto informado desconhecido!')
 
 	# Algoritmo de Prim
-	def rotaMinima(self, vi=1):
+	def rotaMinima(self, vi='1'):
 		rotas = deepcopy(self.grafoRotas)
 		vertices = deepcopy(rotas.getVertices())
 		# vertice inicial
-		v = rotas.buscaVertice(vi)
-		if v is not None:
-			v.setVisitado(True)
-			v.setEstimativa(0)
+		ver = rotas.buscaVertice(vi)
+		if ver is None:
+			print('Vertice não encontrado!')
+			return None
 
-		vertices.remove(v)
-		vertices.append(v)
+		ver.setVisitado(True)
+		ver.setEstimativa(0)
+
+		vertices.remove(ver)
+		vertices.append(ver)
 		
-		sub = []
-		# menor = rotas.menorArestaAdjacente(v)
+		# subgrafo com a resposta
+		self.prim = []
+		self.prim.append(ver)
 		ok = False
 		while not ok:
 			vertices.sort() # ordeno a lista baseado na estimativa
@@ -296,64 +282,32 @@ class AppGrafos(object):
 
 			if v is not None:
 				w = rotas.buscaAresta(u.getId(), v.getId())
-				v.setVisitado(True)
-				v.setEstimativa(w.getDist())
 				vertices.remove(v)
+				v.setVisitado(True)
+				v.setEstimativa(int(w.getDist()))
 				vertices.append(v)
-				sub.append(v)
-
-		for s in sub:
-			print(s)
-
-
-	def montar_grafo(self):
-		for i in self.grafoRotas.getArestas():
-			print(i)
-			(u, v) = (int(i.getDestino().getId()), int(i.getDist()))
-			self.graph.append((u,v))
-
-# Utiliza heap para encontrar a árvore geradora mínima, se o grafo for desconexo, apenas os vertices conectados
-# ao vertice inicial será incluído na árvore geradora mínima.
-	def prim(self, Vi=1):
-
-		# print(self.graph[3])
-		# print(len(self.graph))
-		self.graph[Vi] = (0,-1)
-		heap = [(0,Vi)]
-
-		
-		vis = [False]*len(self.graph)
-		while True:
-			v = -1
-			while len(heap) > 0 and (v < 0 or vis[v]):
-				v = heappop(heap)[1]
-
-			if v < 0 or self.graph[v][0] < 0:
-				break
-			vis[v] = True
-
-			print(v)
-			print(self.graph[v])
-			# for (u, w) in self.graph[v]:
-			for i in self.graph:
-				(u, w) = i
-				if self.graph[u][0] < 0 or self.graph[u][0] > w:
-					self.graph[u] = (w, v)
-					heappush(heap, (self.graph[u][0],u))
-		return self.graph
-
+				self.prim.append(v)
+			else:
+				# nao possui mais adjacentes, remove o vertice
+				vertices.remove(u)
 
 	def desenharGrafo(self):
 		voos = GrafoViz.GrafoViz('voos.gv')
 		rotas = GrafoViz.GrafoViz('rotas.gv', False)
+		prim = GrafoViz.GrafoViz('prim.gv', False)
 		for v in self.grafoVoos.getVertices():
 			voos.novoVertice(v.getId())
 			rotas.novoVertice(v.getId())
+		for v in self.prim:
+			prim.novoVertice(v.getId())
 		for a in self.grafoVoos.getArestas():
 			voos.novaAresta(a.getOrigem().getId(), a.getDestino().getId(), a.getDist())
 			rotas.novaAresta(a.getOrigem().getId(), a.getDestino().getId(), a.getDist())
+			prim.novaAresta(a.getOrigem().getId(), a.getDestino().getId(), a.getDist())
 		# for a in self.grafoRotas.getArestas():
 		# 	rotas.novaAresta(a.getOrigem().getId(), a.getDestino().getId(), a.getDist())
+		voos.view()
 		rotas.view()
+		prim.view()
 	# print(g.source())
 	# g.view()
